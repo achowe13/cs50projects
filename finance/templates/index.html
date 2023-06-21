@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    index
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Shares</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock in stocks %}
+                <tr>
+                    <td>{{ stock["symbol"] }}</td>
+                    <td>{{ stock["name"] }}</td>
+                    <td>{{ stock["shares"] }}</td>
+                    <td>{{ stock["price"] }}</td>
+                    <td>{{ stock["total"] }}</td>
+                </tr>
+            {% endfor %}
+            <tfoot>
+                <tr>
+                    <td colspan="4"></td>
+                    <td>Cash: {{ cash }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4"></td>
+                    <td>Porfolio: {{ porfolio }}</td>
+                </tr>
+            </tfoot>
+        </tbody>
+    </table>
+    <form action="/" method="POST">
+        <input name="shares" placeholder="Shares" type="number" min="0">
+        <select name="symbol">
+            <option disabled selected value="">Stock Symbol</option>
+            {% for option in options %}
+                <option value="{{ option["symbol"] }}">{{ option["symbol"] }}</option>
+            {% endfor %}
+        </select>
+        <button class="btn btn-success" formaction="/buy" method="POST" type="submit">Buy Shares</button>
+        <button class="btn btn-danger" formaction="/sell" type="submit">Sell Shares</button>
+    </form>
+{% endblock %}
